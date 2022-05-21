@@ -1,9 +1,12 @@
 import telebot
-# pip install pyTelegramBotAPI -U
+from os import getenv
+from dotenv import load_dotenv
 
-API_TOKEN = "@BotFather token"
-My_ID = "Your ID"
-name_bot = "FLAC"
+load_dotenv()  # take environment variables from .env.
+
+API_TOKEN = getenv("API_TOKEN")
+USER_ID = getenv("USER_ID")
+BOT_NAME = "FLAC"
 
 MP3_FORMATS = ["audio/" + fmt for fmt in ["mpeg", "aac"]]
 LOSELESS_FORMATS = ["audio/" + fmt for fmt in ["x-wav", "wav", "wave", "ogg", "flac", "annodex", "x-flac"]]
@@ -34,7 +37,7 @@ def handle_docs_audio(message):
             if message.audio.mime_type in LOSELESS_FORMATS:
                 print("Lossless")
                 print(message.audio.duration)
-                bot.forward_message(My_ID, message.chat.id, message.message_id)
+                bot.forward_message(USER_ID, message.chat.id, message.message_id)
                 bot.reply_to(message, "Success!")
         else:
             bot.reply_to(message, "Error text!")
